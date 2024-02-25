@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<h2>Session Details</h2> 
+<table>
+    <thead>
+        <tr>
+        <th>Rank</th>
+        <th>Country</th>
+        <th>Athlete</th>
+        <th>...</th> 
+        <th>Medal</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for result in results %}
+        <tr>
+            <td>{{ result.rank }}</td> 
+            <td>{{ result.athlete.country.country_name }}</td> 
+            <td><a href="{% url 'athlete_detail' result.athlete.id %}">{{ result.athlete.athlete_name }}</a></td>
+            </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

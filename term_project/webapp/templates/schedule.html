@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<h1>Schedule</h1>
+{% for session in sessions %}
+    <h3>Day: {{ session.day }} - {{ session.time }}</h3>
+    <p>Event: {{ session.event.event_name }}</p> 
+    <p>Gender: {{ session.get_gender_display }}</p> 
+    <a href="{% url 'session_detail' session.id %}">View Results</a> 
+{% endfor %}
+
+{% endblock %}
