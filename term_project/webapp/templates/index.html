@@ -4,11 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <title>Document</title>
+  
 </head>
-<body>
-    <h1>This is navbar</h1>
+<body >
+    <div class="topnav" id="myTopnav">
+        <a href="#Home">Home</a>
+        <a href="#Schedule">Schedule</a>
+        <a href="#Medals">Medals</a>
+        <a href="#Result">Result</a>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </a>
+      </div>
     {% block content %}
     {% endblock %}
 </body>
-</html>
+<footer>
+    <script>
+        function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+    </script>
+</footer>
+</html> 
