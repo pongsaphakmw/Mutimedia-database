@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime
+
 
 class Country(models.Model):
     country_name = models.CharField(max_length=100)
@@ -9,20 +11,32 @@ class Country(models.Model):
         return self.country_name
 
 class Event(models.Model):
+    id = models.AutoField(primary_key=True)
     event_name = models.CharField(max_length=100)
-    stage = models.CharField(max_length=50)  
+    event_time = models.TimeField()
+    stage = models.CharField(max_length=50) 
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+
+    class Meta:
+        unique_together = ('event_time', 'stage') 
 
     def __str__(self):
         return self.event_name
 
 class Session(models.Model):
+    id = models.AutoField(primary_key=True)
     day = models.DateField()
-    time = models.TimeField()
+    time = models.CharField(max_length=1, choices=(('M', 'Morning'), ('A', 'Afternoon'), ('E', 'Evening')))
     gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other'))) 
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ManyToManyField(Event)
+
+    class Meta:
+        unique_together = ('day', 'time', 'gender')
 
     def __str__(self):
-        return f'{self.event.event_name} - {self.day}'
+        return f'Session - {self.day} - {self.time}' 
+
 
 class Athlete(models.Model):
     athlete_name = models.CharField(max_length=100)
@@ -39,7 +53,7 @@ class Athlete(models.Model):
 
 class Result(models.Model):
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
-    session = models.ForeignKey(Session, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     rank = models.IntegerField()
     result = models.CharField(max_length=50) 
     score = models.FloatField()
@@ -47,4 +61,4 @@ class Result(models.Model):
                                                    ('Bronze', 'Bronze'), ('None', 'None')))
     
     def __str__(self):
-        return f'{self.athlete.athlete_name} - {self.session.day} - {self.rank}'
+        return f'{self.event.event_name} - {self.athlete.athlete_name} - {self.medal}'

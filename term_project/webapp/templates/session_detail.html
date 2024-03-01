@@ -1,14 +1,14 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-<h2>Session Details</h2> 
+<h2>Event Details</h2> 
 <table>
     <thead>
         <tr>
         <th>Rank</th>
         <th>Country</th>
         <th>Athlete</th>
-        <th>...</th> 
+        <th>BIB number</th> 
         <th>Medal</th>
         </tr>
     </thead>
@@ -17,7 +17,10 @@
         <tr>
             <td>{{ result.rank }}</td> 
             <td>{{ result.athlete.country.country_name }}</td> 
-            <td><a href="{% url 'athlete_detail' result.athlete.id %}">{{ result.athlete.athlete_name }}</a></td>
+            <td>{{ result.athlete.athlete_name }}</td>
+            <td>{{ result.athlete.bib_number }}</td>
+            <td>{{ result.medal }}</td>
+
             </tr>
     {% endfor %}
     </tbody>
