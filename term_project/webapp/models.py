@@ -1,3 +1,4 @@
+import csv
 from django.db import models
 from datetime import datetime
 
@@ -59,6 +60,22 @@ class Athlete(models.Model):
 
     def __str__(self):
         return self.athlete_name
+    
+    def import_athletes_from_csv(csv_file_path):
+        with open(csv_file_path) as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                athlete, created = Athlete.objects.get_or_create(
+                    athlete_name=row['Athlete'] + row['LastName'],
+                    bib_number=int(row['Bib No']),
+                    best_time_score=None,
+                    birth_date=row['DOB'],
+                    gender=row['Gender'],
+                    classification=Classification.objects.get(classification_code=row['Classification']), # Not sure
+                    country=Country.objects.get(country_code=row['Country'])
+                )
+                if not created:  # Handle updates, if desired
+                    print(f"Athlete {athlete.athlete_name} might need an update")
     
 
 class Result(models.Model):
