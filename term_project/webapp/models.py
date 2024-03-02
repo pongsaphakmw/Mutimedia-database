@@ -36,6 +36,15 @@ class Session(models.Model):
 
     def __str__(self):
         return f'Session - {self.day} - {self.time}' 
+    
+
+class Classification(models.Model):
+    classification_name = models.CharField(max_length=50)
+    classification_code = models.CharField(max_length=10)
+    classification_description = models.TextField(blank=True)
+    
+    def __str__(self):
+        return self.classification_code
 
 
 class Athlete(models.Model):
@@ -44,21 +53,22 @@ class Athlete(models.Model):
     best_time_score = models.FloatField(null=True, blank=True)  # Allow for initial null values
     birth_date = models.DateField()
     gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
-    classification = models.CharField(max_length=50, blank=True)  # Optional classification
+    classification = models.ForeignKey(Classification, on_delete=models.PROTECT)
     image_profile = models.ImageField(upload_to='athlete_images', blank=True)
     country = models.ForeignKey(Country, on_delete=models.PROTECT) 
 
     def __str__(self):
         return self.athlete_name
+    
 
 class Result(models.Model):
     athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    rank = models.IntegerField()
-    result = models.CharField(max_length=50) 
-    score = models.FloatField()
+    rank = models.IntegerField(blank=True, null=True)
+    result = models.CharField(max_length=50, default='On Going') 
+    score = models.FloatField(blank=True, null=True)
     medal = models.CharField(max_length=10, choices=(('Gold', 'Gold'), ('Silver', 'Silver'), 
-                                                   ('Bronze', 'Bronze'), ('None', 'None')))
+                                                   ('Bronze', 'Bronze'), ('None', 'None')), default='None')
     
     def __str__(self):
         return f'{self.event.event_name} - {self.athlete.athlete_name} - {self.medal}'

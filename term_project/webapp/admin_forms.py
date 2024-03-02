@@ -31,3 +31,6 @@ class AthleteAdminView(admin.ModelAdmin):
     search_fields = ('athlete_name', 'bib_number', 'country', 'gender')
     list_filter = ('country', 'gender')
     
+class CountryAdminView(admin.ModelAdmin):
+    list_display = ('country_name', 'country_code')
+    search_fields = ('country_name', 'country_code')
