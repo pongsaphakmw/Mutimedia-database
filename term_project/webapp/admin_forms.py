@@ -26,7 +26,7 @@ class ResultAdminForm(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if obj.event and obj.athlete.gender != obj.event.gender:
-            raise forms.ValidationError('Athlete gender must match event gender.')
+            raise forms.ValidationError('Athlete gender must match event gender.', code='invalid')
         super().save_model(request, obj, form, change)
 
 
