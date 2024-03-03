@@ -24,6 +24,9 @@ body {
 
 .card-content {
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .card h2 {
@@ -56,31 +59,27 @@ svg {
 
 .card-link {
     text-decoration: none;
-    /* Remove underline */
     color: inherit;
-    /* Inherit color from parent */
 }
 
 .card-link:hover {
     text-decoration: none;
-    /* Remove underline on hover */
     color: inherit;
-    /* Inherit color from parent on hover */
 }
 
 .bigtext {
     font-size: 32px;
     margin-right: 10vh;
+    width: 10vh;
 }
 
 .margintext {
-    padding-right: 10vh;
-    padding-left: 10vh;
+    padding-right: 5vh;
+    padding-left: 5vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
     border-left: 1px solid #ccc;
 }
-
 
 .margintextsmall {
     margin-right: 5vh;
@@ -93,28 +92,39 @@ svg {
 
 .event-time {
     margin-right: 20px;
-    /* Adjust margin as needed */
-}
-
-.card-content {
-    flex-grow: 1;
-    /* Allow content to fill remaining space */
-    display: flex;
-    justify-content: space-between;
-    /* Distribute items evenly */
-    align-items: center;
+    padding-right: 52px;
 }
 
 .margintext,
 .margintextsmall {
-    /* Adjust styles as needed */
     white-space: nowrap;
-    /* Prevent text from wrapping */
 }
 
 .svg-icon {
     width: 20px;
     height: 20px;
     margin-right: 10px;
-    /* Adjust margin as needed */
+}
+
+.table-content {
+    display: none;
+    /* Initially hide table content */
+}
+
+.classification-span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 30vh;
+}
+
+.table-content {
+    display: none;
+}
+
+.card.show-table .card-content {
+    display: none;
+}
+
+.card.show-table .table-content {
+    display: block;
 }
