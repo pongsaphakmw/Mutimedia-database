@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<h1>Results</h1>
+{% for result in results %}
+    <h3>Day: {{ result.session.day }} - {{ result.session.time }}</h3>
+    <p>Event: {{ result.session.event.event_name }}</p>
+{% endfor %}
+{% endblock %}
