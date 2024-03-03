@@ -11,6 +11,13 @@
         <li>{{ event.event_name }}
             <p>Gender: {{ session.get_gender_display }}</p> 
             <p>Stage: {{ event.stage }}</p>
+            {% for result in results %}
+                {% if result.event == event %}
+                    <p>Classification {{ result.athlete.classification }}</p>
+                
+                {% endif %}
+                <p>Classification: {{ result.athlete.classification }}</p>
+            {% endfor %}
             <a href="{% url 'event-detail' event.id %}">View Results</a> 
         </li>
     {% endfor %}
