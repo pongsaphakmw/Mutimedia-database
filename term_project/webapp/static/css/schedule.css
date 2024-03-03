@@ -8,6 +8,7 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #232323;
+    color: white;
 }
 
 .whitetext {
@@ -15,8 +16,8 @@ body {
 }
 
 .card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: #2a2a2a;
+    border: 1px solid #414141;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
@@ -73,9 +74,43 @@ svg {
     width: 10vh;
 }
 
+.event-name-margintext {
+    padding-right: 10vh;
+    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-left: 1px solid #ccc;
+    width: 20vh;
+}
+
 .margintext {
     padding-right: 5vh;
     padding-left: 5vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-left: 1px solid #ccc;
+}
+
+.table-rank-margintext {
+    padding-right: 10vh;
+    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    /* border-left: 1px solid #00ff33; */
+}
+
+.table-margintext {
+    padding-right: 10vh;
+    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-left: 1px solid #ccc;
+}
+
+.table-name-margintext {
+    width: 20vh;
+    padding-right: 20vh;
+    padding-left: 20vh;
     padding-top: 2vh;
     padding-bottom: 2vh;
     border-left: 1px solid #ccc;
@@ -117,6 +152,7 @@ svg {
     max-width: 30vh;
 }
 
+
 .table-content {
     display: none;
 }
@@ -127,4 +163,14 @@ svg {
 
 .card.show-table .table-content {
     display: block;
+}
+
+.table-padding {
+    padding-left: 2vh;
+    padding-right: 2vh;
+    color: red;
+}
+
+.table-width {
+    width: 5vh;
 }

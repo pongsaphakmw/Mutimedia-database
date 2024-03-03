@@ -9,7 +9,7 @@
 
 <body>
 
-    <h1>Schedule</h1>
+    <!-- <h1>Schedule</h1> -->
     {% for session in sessions %}
     <h1 class="whitetext">{{ session.day }}</h1>
     <ul>
@@ -19,7 +19,7 @@
                 <h2 class="card-header">
                     <span class="event-time bigtext">{{ event.event_time }}</span>
                     <span class="card-content">
-                        <span class="margintext"> {{ event.event_name }}</span>
+                        <span class="event-name-margintext"> {{ event.event_name }}</span>
                         {% if event.gender == 'M'%}
                         <svg class="margintext" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             stroke="#006eff" style="vertical-align: middle;">
@@ -64,22 +64,22 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Rank</th>
-                            <th>Country</th>
-                            <th>Athlete</th>
-                            <th>BIB number</th>
-                            <th>Medal</th>
+                            <th class="table-rank-margintext">Rank</th>
+                            <th class="table-margintext">Country</th>
+                            <th class="table-name-margintext">Athlete</th>
+                            <th class="table-margintext">BIB number</th>
+                            <th class="table-margintext">Medal</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for result in results %}
                         {% if result.event == event %}
                         <tr>
-                            <td>{{ result.rank }}</td>
-                            <td>{{ result.athlete.country.country_name }}</td>
-                            <td>{{ result.athlete.athlete_name }}</td>
-                            <td>{{ result.athlete.bib_number }}</td>
-                            <td>{{ result.medal }}</td>
+                            <td class="table-rank-margintext">{{ result.rank }}</td>
+                            <td class="margintext">{{ result.athlete.country.country_name }}</td>
+                            <td class="margintext">{{ result.athlete.athlete_name }}</td>
+                            <td class="margintext">{{ result.athlete.bib_number }}</td>
+                            <td class="margintext">{{ result.medal }}</td>
                         </tr>
                         {% endif %}
                         {% endfor %}

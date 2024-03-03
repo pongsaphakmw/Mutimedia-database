@@ -1,74 +1,28 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
+<h2>Event Details</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Country</th>
+            <th>Athlete</th>
+            <th>BIB number</th>
+            <th>Medal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in results %}
+        <tr>
+            <td>{{ result.rank }}</td>
+            <td>{{ result.athlete.country.country_name }}</td>
+            <td>{{ result.athlete.athlete_name }}</td>
+            <td>{{ result.athlete.bib_number }}</td>
+            <td>{{ result.medal }}</td>
 
-
-<body>
-
-    <h1>Schedule</h1>
-    {% for session in sessions %}
-    <h1 class="whitetext">{{ session.day }}</h1>
-    <ul>
-        {% for event in session.event.all %}
-        <div class="card">
-            <div class="card-content">
-                <div class="card-header" onclick="toggleEventDetails(this)">
-                    <span class="event-time bigtext">{{ event.event_time }}</span>
-                    <span class="card-content">
-                        <span class="margintext"> {{ event.event_name }}</span>
-                        {% if event.gender == 'M'%}
-                        <svg class="margintext toggle-icon" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" stroke="#006eff">
-                            <!-- Male Icon SVG -->
-                        </svg>
-                        {% else %}
-                        <svg class="margintext toggle-icon" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" stroke="#ff005a">
-                            <!-- Female Icon SVG -->
-                        </svg>
-                        {% endif %}
-                        <span class="margintext">
-                            <span>Stage:</span>
-                            <span>{{ event.stage }} </span>
-                        </span>
-                    </span>
-                </div>
-                <div class="event-details-container">
-                    <table class="event-details-table" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Country</th>
-                                <th>Athlete</th>
-                                <th>BIB number</th>
-                                <th>Medal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for result in results %}
-                            {% if result.event == event %}
-                            <tr>
-                                <td>{{ result.rank }}</td>
-                                <td>{{ result.athlete.country.country_name }}</td>
-                                <td>{{ result.athlete.athlete_name }}</td>
-                                <td>{{ result.athlete.bib_number }}</td>
-                                <td>{{ result.medal }}</td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        </tr>
         {% endfor %}
-    </ul>
-    {% endfor %}
-    <script>
-        function toggleEventDetails(cardHeader) {
-            const detailsContainer = cardHeader.nextElementSibling.querySelector('.event-details-table');
-            detailsContainer.style.display = detailsContainer.style.display === 'none' ? 'table' : 'none';
-        }
-    </script>
-    {% endblock %}
-</body>
+    </tbody>
+</table>
+{% endblock %}
