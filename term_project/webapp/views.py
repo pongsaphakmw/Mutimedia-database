@@ -11,7 +11,9 @@ def HomePage(request):
 
 def schedule_view(request):
     sessions = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
-    context = {'sessions': sessions}
+    results = Result.objects.all() # Fetch and order results
+    context = {'sessions': sessions,
+               'results': results}
     return render(request, 'schedule.html', context) 
 
 

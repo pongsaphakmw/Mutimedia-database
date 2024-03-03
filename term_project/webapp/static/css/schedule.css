@@ -28,7 +28,7 @@ body {
 
 .card h2 {
     margin-top: 0;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     font-size: 18px;
 }
 
@@ -74,5 +74,47 @@ svg {
 }
 
 .margintext {
-    margin-right: 10vh;
+    padding-right: 10vh;
+    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-left: 1px solid #ccc;
+}
+
+
+.margintextsmall {
+    margin-right: 5vh;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+}
+
+.event-time {
+    margin-right: 20px;
+    /* Adjust margin as needed */
+}
+
+.card-content {
+    flex-grow: 1;
+    /* Allow content to fill remaining space */
+    display: flex;
+    justify-content: space-between;
+    /* Distribute items evenly */
+    align-items: center;
+}
+
+.margintext,
+.margintextsmall {
+    /* Adjust styles as needed */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+.svg-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    /* Adjust margin as needed */
 }
