@@ -1,6 +1,16 @@
+.bg{
+    background-color: #232323;
+}
 .topnav {
     background-color: #BB3131;
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    
+  
     
 }
 
@@ -12,6 +22,8 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
+
+    
 }
 
 .topnav a:hover {
@@ -32,9 +44,12 @@
 }
 
 @media screen and (max-width: 600px) {
-    .topnav.responsive {position: relative;}
+    .topnav.responsive {position: fixed;
+    top:0;
+right: 0;
+left: 0;}
     .topnav.responsive a.icon {
-        position: absolute;
+        position: fixed;
         right: 0;
         top: 0;
     }
