@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 
 # Create your views here.
@@ -25,3 +25,9 @@ def results_view(request):
     results = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
     context = {'results': results}
     return render(request, 'results.html', context)
+
+def import_csv(request):
+    if request.method == 'POST':
+        # ... handle file upload, call import_athletes_from_csv ...
+        return redirect('admin:app_label_athlete_changelist')  # Redirect back to Athlete list
+    return render(request, 'admin/import_csv.html')  # Render a simple form template
