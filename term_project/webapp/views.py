@@ -15,8 +15,13 @@ def schedule_view(request):
     return render(request, 'schedule.html', context) 
 
 
-def session_detail_view(request, session_id):
-    session = get_object_or_404(Session, pk=session_id)
-    results = Result.objects.filter(session=session).order_by('rank')
-    context = {'session': session, 'results': results}
+def event_detail_view(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    results = Result.objects.filter(event=event).order_by('rank')
+    context = {'event': event, 'results': results}
     return render(request, 'session_detail.html', context) 
+
+def results_view(request):
+    results = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
+    context = {'results': results}
+    return render(request, 'results.html', context)
