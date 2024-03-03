@@ -31,3 +31,14 @@ def import_csv(request):
         # ... handle file upload, call import_athletes_from_csv ...
         return redirect('admin:app_label_athlete_changelist')  # Redirect back to Athlete list
     return render(request, 'admin/import_csv.html')  # Render a simple form template
+
+def medals_view(request):
+    gold = Result.objects.filter(medal='Gold').count()
+    silver = Result.objects.filter(medal='Silver').count()
+    bronze = Result.objects.filter(medal='Bronze').count()
+    results = Result.objects.all().order_by('rank')
+    context = {'results': results, 'gold': gold, 'silver': silver, 'bronze': bronze}
+    return render(request, 'medals.html', context)
+
+
+

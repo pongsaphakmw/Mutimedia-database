@@ -1,7 +1,6 @@
 import csv
 from django.db import models
 from datetime import datetime
-import io
 
 
 class Country(models.Model):
@@ -17,33 +16,33 @@ class Event(models.Model):
     event_name = models.CharField(max_length=100)
     event_time = models.TimeField()
     stage = models.CharField(max_length=50) 
-    gender = models.CharField(max_length=1, choices=(('M', 'Men'), ('W', 'Women'), ('O', 'Other')), default=('O')) 
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()
 
     class Meta:
-        unique_together = ('event_time', 'stage', 'gender') 
+        unique_together = ('event_time', 'stage') 
 
     def __str__(self):
-        return f'{self.event_name} - {self.gender}'
+        return self.event_name
 
 class Session(models.Model):
     id = models.AutoField(primary_key=True)
     day = models.DateField()
     time = models.CharField(max_length=1, choices=(('M', 'Morning'), ('A', 'Afternoon'), ('E', 'Evening')))
+    gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other'))) 
     event = models.ManyToManyField(Event)
 
     class Meta:
-        unique_together = ('day', 'time')
+        unique_together = ('day', 'time', 'gender')
 
     def __str__(self):
         return f'Session - {self.day} - {self.time}' 
     
 
 class Classification(models.Model):
-    classification_name = models.CharField(max_length=50, blank=True, null=True)
+    classification_name = models.CharField(max_length=50)
     classification_code = models.CharField(max_length=10)
-    classification_description = models.TextField(blank=True, null=True)
+    classification_description = models.TextField(blank=True)
     
     def __str__(self):
         return self.classification_code
@@ -53,8 +52,8 @@ class Athlete(models.Model):
     athlete_name = models.CharField(max_length=100)
     bib_number = models.IntegerField()
     best_time_score = models.FloatField(null=True, blank=True)  # Allow for initial null values
-    birth_date = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=1, choices=(('M', 'Men'), ('W', 'Women'), ('O', 'Other')))
+    birth_date = models.DateField()
+    gender = models.CharField(max_length=1, choices=(('M', 'Male'), ('F', 'Female'), ('O', 'Other')))
     classification = models.ForeignKey(Classification, on_delete=models.PROTECT)
     image_profile = models.ImageField(upload_to='athlete_images', blank=True)
     country = models.ForeignKey(Country, on_delete=models.PROTECT) 
@@ -63,25 +62,20 @@ class Athlete(models.Model):
         return self.athlete_name
     
     def import_athletes_from_csv(csv_file_path):
-        decoded_file = csv_file_path.read().decode('utf-8')  # Decode if necessary
-        io_string = io.StringIO(decoded_file)
-        reader = csv.DictReader(io_string)
-        for row in reader:
-            
-            _classification, _ = Classification.objects.get_or_create(
-                classification_code=row['Classification'] if row['Classification'] else 'None'
-            )
-            athlete, created = Athlete.objects.get_or_create(
-                athlete_name=row['Athlete']+ ' ' + row['LastName'],
-                bib_number=int(row['Bib No']),
-                best_time_score=None,
-                birth_date=row['DOB'] if row['DOB'] else None,
-                gender=row['Gender'][0],
-                classification= _classification, # Not sure
-                country=Country.objects.get(country_code=row['Country'])
-            )
-            if not created:  # Handle updates, if desired
-                print(f"Athlete {athlete.athlete_name} might need an update")
+        with open(csv_file_path) as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                athlete, created = Athlete.objects.get_or_create(
+                    athlete_name=row['Athlete'] + row['LastName'],
+                    bib_number=int(row['Bib No']),
+                    best_time_score=None,
+                    birth_date=row['DOB'],
+                    gender=row['Gender'],
+                    classification=Classification.objects.get(classification_code=row['Classification']), # Not sure
+                    country=Country.objects.get(country_code=row['Country'])
+                )
+                if not created:  # Handle updates, if desired
+                    print(f"Athlete {athlete.athlete_name} might need an update")
     
 
 class Result(models.Model):
