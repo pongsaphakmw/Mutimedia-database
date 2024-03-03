@@ -1,26 +1,59 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
-from .models import Result, Athlete
+from django.http import HttpRequest
+from .models import Result, Athlete, Event
+from django.urls import path
+from django.shortcuts import render, redirect
+from django import forms
 
 class ResultInline(admin.TabularInline):  # For inline editing
     model = Result
+
+    def clean(self):
+        for form in self.cleaned_data:
+            event = form.cleaned_data.get('event')  # Access the event from the form
+            athlete = form.cleaned_data.get('athlete')  # Access the athlete from the form
+            if event and athlete and event.gender != athlete.gender:
+                raise forms.ValidationError('Athlete gender must match the selected event gender.')
+        return super().clean()
+
+class CsvImportForm(forms.Form):
+    csv_file = forms.FileField()
 
 class ResultAdminForm(admin.ModelAdmin):
     list_display = ('athlete', 'event', 'rank', 'result', 'medal')
     search_fields = ('event__event_name', 'athlete__athlete_name', 'rank', 'result', 'medal')
     list_filter = ('event', 'medal')
 
+    def save_model(self, request, obj, form, change):
+        if obj.event and obj.athlete.gender != obj.event.gender:
+            raise forms.ValidationError('Athlete gender must match event gender.')
+        super().save_model(request, obj, form, change)
+
+
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('event_name', 'event_time', 'stage',)
-    search_fields = ('event_name', 'event_time', 'stage')
-    list_filter = ('stage', 'start_datetime')
+    list_display = ('event_name', 'gender','event_time', 'stage')
+    search_fields = ('event_name', 'event_time', 'stage', 'gender')
+    list_filter = ('stage', 'start_datetime', 'gender')
 
     inlines = [ResultInline]
 
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)  # Save results without saving to database yet
+
+        for obj in formset.deleted_objects:
+            obj.delete()
+
+        for instance in instances:
+            if instance.event and instance.athlete.gender != instance.event.gender:
+               instance.add_error('athlete', forms.ValidationError('Athlete gender must match event gender.'))
+            instance.save()  # Save each validated result instance
+
+        formset.save_m2m()
+
 class SessionAdminView(admin.ModelAdmin):
-    search_fields = ('id','gender', 'day', 'time', 'event')
-    list_filter = ('id','gender', 'day', 'time')
-    list_display = ('day', 'display_events', 'time', 'gender')
+    search_fields = ('id', 'day', 'time', 'event')
+    list_filter = ('id', 'day', 'time')
+    list_display = ('day', 'display_events', 'time')
 
     def display_events(self, obj):
         return ", ".join([event.event_name for event in obj.event.all()])
@@ -34,14 +67,28 @@ class AthleteAdminView(admin.ModelAdmin):
 
     actions = ['import_from_csv']
 
-    def import_from_csv(self, request, queryset):
-        if 'csv_file' in request.FILES:
-            # Temporary file handling (adjust as needed)
-            temp_file = request.FILES['csv_file'].temporary_file_path()
-            Athlete.import_athletes_from_csv(temp_file)
-            self.message_user(request, "Import completed")
-        else:
-            self.message_user(request, "Please select a CSV file to upload")
+    change_list_template = 'admin/import_csv.html'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('import-csv/', self.import_from_csv),
+        ]
+        return my_urls + urls
+    
+    def import_from_csv(self, request):
+        if request.method == "POST":
+            csv_file = request.FILES["csv_file"]
+            # reader = csv.reader(csv_file)
+            Athlete.import_athletes_from_csv(csv_file)
+            self.message_user(request, "Your csv file has been imported")
+            return redirect("..")
+        form = CsvImportForm()
+        payload = {"form": form}
+        return render(
+            request, "admin/csv_form.html", payload
+        )
+
     
 class CountryAdminView(admin.ModelAdmin):
     list_display = ('country_name', 'country_code')
