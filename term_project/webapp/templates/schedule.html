@@ -4,9 +4,9 @@
 <h1>Schedule</h1>
 {% for session in sessions %}
 {{session}}
-    <h3>Day: {{ session.day }} - {{ session.time }}</h3>
-    <p>Events:</p>
-    <ul>
+<h3>Day: {{ session.day }} - {{ session.time }}</h3>
+<p>Events:</p>
+<ul>
     {% for event in session.event.all %}
         <li>{{ event.event_name }}
             <p>Gender: {{ session.get_gender_display }}</p> 
@@ -21,7 +21,7 @@
             <a href="{% url 'event-detail' event.id %}">View Results</a> 
         </li>
     {% endfor %}
-    </ul>
+</ul>
 {% endfor %}
 
 {% endblock %}

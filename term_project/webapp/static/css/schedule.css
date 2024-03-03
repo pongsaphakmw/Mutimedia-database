@@ -1,0 +1,120 @@
+.bg {
+    background-color: #232323;
+}
+
+body {
+    margin-top: 80px;
+    margin-right: 10vh;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #232323;
+}
+
+.whitetext {
+    color: white;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.card a {
+    display: block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+}
+
+.card-link {
+    text-decoration: none;
+    /* Remove underline */
+    color: inherit;
+    /* Inherit color from parent */
+}
+
+.card-link:hover {
+    text-decoration: none;
+    /* Remove underline on hover */
+    color: inherit;
+    /* Inherit color from parent on hover */
+}
+
+.bigtext {
+    font-size: 32px;
+    margin-right: 10vh;
+}
+
+.margintext {
+    padding-right: 10vh;
+    padding-left: 10vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    border-left: 1px solid #ccc;
+}
+
+
+.margintextsmall {
+    margin-right: 5vh;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+}
+
+.event-time {
+    margin-right: 20px;
+    /* Adjust margin as needed */
+}
+
+.card-content {
+    flex-grow: 1;
+    /* Allow content to fill remaining space */
+    display: flex;
+    justify-content: space-between;
+    /* Distribute items evenly */
+    align-items: center;
+}
+
+.margintext,
+.margintextsmall {
+    /* Adjust styles as needed */
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+.svg-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    /* Adjust margin as needed */
+}
