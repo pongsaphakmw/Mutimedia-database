@@ -11,8 +11,9 @@ def HomePage(request):
 
 def schedule_view(request):
     sessions = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
-    results = Result.objects.all()
-    context = {'sessions': sessions, 'results': results}
+    results = Result.objects.all().order_by('rank') # Fetch and order results
+    context = {'sessions': sessions,
+               'results': results}
     return render(request, 'schedule.html', context) 
 
 
@@ -23,8 +24,10 @@ def event_detail_view(request, event_id):
     return render(request, 'session_detail.html', context) 
 
 def results_view(request):
-    results = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
-    context = {'results': results}
+    sessions = Session.objects.all().order_by('day', 'time')
+    results = Result.objects.all().order_by('rank')  # Fetch and order sessions
+    context = {'sessions': sessions,
+               'results': results}
     return render(request, 'results.html', context)
 
 def import_csv(request):
