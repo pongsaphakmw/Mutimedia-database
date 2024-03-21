@@ -11,8 +11,7 @@
 
 <table class="basic-table treat-table">
     
-    <tr >
-<table>
+
     <tr>
         <th>Flag</th>
         <th>Country</th>
@@ -22,21 +21,24 @@
         <th>Total</th>
     </tr>
     {% for medal in country_medals %}
-    <tr>
-        <td><img src="{% static medal.country_flag %}" alt="flag" style="width:100px;height:100px;"></td>
     <tr class="accordion"> 
+        <td><img src="{% static medal.country_flag %}" alt="flag" style="width:200px;height:100px;"></td>
         <td>{{ medal.country }}</td>
         <td>{{ medal.gold_medals }}</td>
         <td>{{ medal.silver_medals }}</td>
         <td>{{ medal.bronze_medals }}</td>
         <td>{{ medal.total_medals }}</td>
+        
 
-        <td>{{ medal.athletes}}</td>
+        
     </tr>
     <tr class="rowContent">
         <td colspan="5">
-        <h5>This is content</h5>
-        <p>This area show hided content</p>
+        {% for athlete in medal.athletes %}
+        <table><tr> {{athlete.athlete_name}}</tr></table>
+           
+        {% endfor %}
+
         </td>
       </tr>
     
