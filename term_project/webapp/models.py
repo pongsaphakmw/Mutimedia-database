@@ -1,7 +1,9 @@
 import csv
 from django.db import models
 from datetime import datetime
+from django.core.files.base import ContentFile
 import io
+import base64
 
 
 class Country(models.Model):
@@ -67,18 +69,28 @@ class Athlete(models.Model):
         io_string = io.StringIO(decoded_file)
         reader = csv.DictReader(io_string)
         for row in reader:
-            
+
+            # Handle potential missing 'Image' field
+            # image_profile = row['Image'] if 'Image' in row else None  # Set to None if missing
+            if 'Image' in row and row['Image']:
+                encoded_string = row['Image']
+                img_data = base64.b64decode(encoded_string)
+                image_profile = ContentFile(img_data, name=f'{row["Bib No"]}.jpg')
+            else:
+                image_profile = None
+
             _classification, _ = Classification.objects.get_or_create(
                 classification_code=row['Classification'] if row['Classification'] else 'None'
             )
             athlete, created = Athlete.objects.get_or_create(
-                athlete_name=row['Athlete']+ ' ' + row['LastName'],
+                athlete_name=row['Athlete'] + ' ' + row['LastName'],
                 bib_number=int(row['Bib No']),
                 best_time_score=None,
-                birth_date=row['DOB'] if row['DOB'] else None,
+                birth_date=datetime.strptime(row['DOB'], '%Y-%m-%d').date() if row['DOB'] else None,  # Parse date
                 gender=row['Gender'][0],
-                classification= _classification, # Not sure
-                country=Country.objects.get(country_code=row['Country'])
+                classification=_classification,
+                country=Country.objects.get(country_code=row['Country']),
+                image_profile=image_profile
             )
             if not created:  # Handle updates, if desired
                 print(f"Athlete {athlete.athlete_name} might need an update")
