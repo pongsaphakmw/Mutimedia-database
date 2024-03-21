@@ -11,6 +11,9 @@ def HomePage(request):
 
 def schedule_view(request):
     sessions = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
+    results = Result.objects.all().order_by('rank') # Fetch and order results
+    context = {'sessions': sessions,
+               'results': results}
     results = Result.objects.all()
     context = {'sessions': sessions, 'results': results}
     return render(request, 'schedule.html', context) 
@@ -23,8 +26,10 @@ def event_detail_view(request, event_id):
     return render(request, 'session_detail.html', context) 
 
 def results_view(request):
-    results = Session.objects.all().order_by('day', 'time')  # Fetch and order sessions
-    context = {'results': results}
+    sessions = Session.objects.all().order_by('day', 'time')
+    results = Result.objects.all().order_by('rank')  # Fetch and order sessions
+    context = {'sessions': sessions,
+               'results': results}
     return render(request, 'results.html', context)
 
 def import_csv(request):
@@ -33,13 +38,7 @@ def import_csv(request):
         return redirect('admin:app_label_athlete_changelist')  # Redirect back to Athlete list
     return render(request, 'admin/import_csv.html')  # Render a simple form template
 
-def medals_view(request):
-    gold = Result.objects.filter(medal='Gold').count()
-    silver = Result.objects.filter(medal='Silver').count()
-    bronze = Result.objects.filter(medal='Bronze').count()
-    results = Result.objects.all().order_by('rank')
-    context = {'results': results, 'gold': gold, 'silver': silver, 'bronze': bronze}
-    return render(request, 'medals.html', context)
-
-
-
+def AthleteListView(request):
+    athletes = Athlete.objects.all().order_by('classification')
+    context = {'athletes': athletes}
+    return render(request, 'athlete_list.html', context)

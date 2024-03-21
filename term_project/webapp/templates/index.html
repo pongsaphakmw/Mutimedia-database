@@ -1,7 +1,16 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <title>Document</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -11,6 +20,21 @@
     <title>Document</title>
   
 </head>
+
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="{% url 'home-page' %}">Home</a>
+    <a href="{% url 'schedule' %}">Schedule</a>
+    <a href="#Medals">Medals</a>
+    <a href="{% url 'athlete-list'%}">Athletes</a>
+    <a href="{% url 'results' %}">Result</a>
+    <!-- <a href="#Result">Result</a> -->
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  {% block content %}
+  {% endblock %}
 <body class="bg">
     <div class="topnav" id="myTopnav">
         <a href="{% url 'home-page' %}">Home</a>
@@ -26,15 +50,16 @@
     {% endblock %}
 </body>
 <footer>
-    <script>
-        function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-    </script>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
 </footer>
-</html> 
+
+</html>

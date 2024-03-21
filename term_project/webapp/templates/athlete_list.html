@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    <h1>Athlete List</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+
+        </tr>
+        {% for athlete in athletes %}
+        <tr>
+            <td>{{ athlete.athlete_name }}</td>
+            <td>{{ athlete.country }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
