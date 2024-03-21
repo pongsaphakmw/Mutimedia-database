@@ -1,19 +1,16 @@
-.bg {
-    background-color: #232323;
-}
 
 .topnav {
-    background-color: #BB3131;
+    background-color: #2f7871;;
     overflow: hidden;
     position: fixed;
     width: 100%;
     left: 0;
     right: 0;
     top: 0;
-
-
-
+    z-index: 1000; 
+    
 }
+
 
 .topnav a {
     float: left;
@@ -23,23 +20,26 @@
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-
-
 }
+
 
 .topnav a:hover {
     background-color: #232323;
     color: white;
 }
 
+
 .topnav .icon {
     display: none;
 }
 
+
 @media screen and (max-width: 600px) {
+ 
     .topnav a:not(:first-child) {
         display: none;
     }
+
 
     .topnav a.icon {
         float: right;
@@ -47,19 +47,8 @@
     }
 }
 
-@media screen and (max-width: 600px) {
-    .topnav.responsive {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-    }
 
-    .topnav.responsive a.icon {
-        position: fixed;
-        right: 0;
-        top: 0;
-    }
+@media screen and (max-width: 600px) {
 
     .topnav.responsive a {
         float: none;
@@ -67,3 +56,16 @@
         text-align: left;
     }
 }
+.nav-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+body {
+margin: 0; 
+display: flex;
+justify-content: center; 
+align-items: center;
+min-height: 100vh; 
+}
+  

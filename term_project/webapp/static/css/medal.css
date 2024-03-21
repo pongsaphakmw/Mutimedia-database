@@ -4,6 +4,7 @@ table.basic-table {
     border-spacing: 0;
     border: none;
     margin-bottom: 15px;
+    margin-top: 58px;
   }
   
   table.basic-table th {
@@ -26,7 +27,7 @@ tr:hover {
     padding: 15px;
     text-align: left;
     
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd
   }
   
   table.basic-table tr:nth-child(odd) {
