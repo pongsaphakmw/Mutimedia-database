@@ -2,21 +2,59 @@
 {% load static %}
 {% block content %}
 <h1>Medal Table</h1>
-<table>
-    <tr>
-        <th>Country</th>
-        <th>Gold</th>
-        <th>Silver</th>
-        <th>Bronze</th>
-    </tr>
-    {% for medal in country_medals %}
-    <tr>
-        <td>{{ medal.country }}</td>
-        <td>{{ medal.gold_medals }}</td>
-        <td>{{ medal.silver_medals }}</td>
-        <td>{{ medal.bronze_medals }}</td>
-        <td>{{ medal.total_medals }}</td>
-    </tr>
-    {% endfor %}
-</table>
-{% endblock %}
+
+<link rel="stylesheet" href="{% static 'css/medal.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<body class="BG_COLOR">
+    <table class="basic-table treat-table">
+    
+
+        <tr>
+            <th>Flag</th>
+            <th>Country</th>
+            <th>Gold</th>
+            <th>Silver</th>
+            <th>Bronze</th>
+            <th>Total</th>
+        </tr>
+        {% for medal in country_medals %}
+        <tr class="accordion"> 
+            <td><img src="{% static medal.country_flag %}" alt="flag" style="width:200px;height:100px;"></td>
+            <td>{{ medal.country }}</td>
+            <td>{{ medal.gold_medals }}</td>
+            <td>{{ medal.silver_medals }}</td>
+            <td>{{ medal.bronze_medals }}</td>
+            <td>{{ medal.total_medals }}</td>
+            
+    
+            
+        </tr>
+        <tr class="rowContent" style="border-bottom: 1px solid #ddd;" >
+            <td colspan="5">
+            {% for athlete in medal.athletes %}
+            <table><tr> {{athlete.athlete_name}}</tr></table>
+               
+            {% endfor %}
+    
+            </td>
+          </tr>
+        
+        {% endfor %}
+    
+    </table>
+    <script> $(function() {
+        var $research = $('.treat-table');
+        $research.find("tr").not('.accordion').hide();
+        $research.find("tr").eq(0).show();
+    
+        $research.find(".accordion").click(function(){
+            $(this).next("tr").toggle();
+        })
+    });</script>
+    {% endblock %}
+    
+</body>

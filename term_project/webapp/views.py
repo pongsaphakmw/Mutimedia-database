@@ -14,6 +14,8 @@ def schedule_view(request):
     results = Result.objects.all().order_by('rank') # Fetch and order results
     context = {'sessions': sessions,
                'results': results}
+    results = Result.objects.all()
+    context = {'sessions': sessions, 'results': results}
     return render(request, 'schedule.html', context) 
 
 
@@ -73,11 +75,14 @@ def medalView(request):
         athletes = Athlete.objects.filter(country=country)
         country_medal = {
             'country': country.country_name,
+            'country_flag': f'media/{country.country_flag_image}',
             'gold_medals': Result.objects.filter(athlete__in=athletes, medal='Gold').count(),
             'silver_medals': Result.objects.filter(athlete__in=athletes, medal='Silver').count(),
             'bronze_medals': Result.objects.filter(athlete__in=athletes, medal='Bronze').count(),
             'total_medals': Result.objects.filter(athlete__in=athletes).count(),
+            'athletes': athletes
         }
         country_medals.append(country_medal)
+    print(country.country_flag_image)
     context = {'country_medals': country_medals}
     return render(request, 'medal.html', context)
