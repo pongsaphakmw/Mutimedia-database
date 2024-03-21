@@ -8,7 +8,7 @@ table.basic-table {
   
   table.basic-table th {
     background-color: rgb(59, 59, 59);
-    text-align:c;
+    text-align: left;
     color: #fff;
     vertical-align: top;
     font-weight: 500;
@@ -26,14 +26,18 @@ tr:hover {
     padding: 15px;
     text-align: left;
     
-    border-bottom: 1px solid #ddd
+    border-bottom: 1px solid #ddd;
   }
   
   table.basic-table tr:nth-child(odd) {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    background-color: #232323;
+    color: #fff;
     
   }
   table.basic-table {
     margin-bottom: 0;
   }
+body.BG_COLOR{
+    background-color: #232323;
+    font-family: Arial, sans-serif;
+}
