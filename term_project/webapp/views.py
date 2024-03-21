@@ -35,3 +35,33 @@ def import_csv(request):
         # ... handle file upload, call import_athletes_from_csv ...
         return redirect('admin:app_label_athlete_changelist')  # Redirect back to Athlete list
     return render(request, 'admin/import_csv.html')  # Render a simple form template
+
+def AthleteListView(request):
+    athletes = Athlete.objects.all().order_by('classification')
+    athlete_medals = []
+    for athlete in athletes:
+        athlete_medal = {'athlete': athlete.athlete_name, 
+                        'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
+                        'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
+                        'bronze_medals': Result.objects.filter(athlete=athlete, medal='Bronze').count(),
+                        'total_medals': Result.objects.filter(athlete=athlete).count(),
+                        'athlete_info': athlete}
+        athlete_medals.append(athlete_medal)
+        # print(f'{athlete} = {athlete_medal["athlete"]}')
+    # for i in athlete_medals:
+    #     print(i['athlete'], i['gold_medals'], i['silver_medals'], i['bronze_medals'])
+    context = {'athletes': athletes, 'athlete_medals': athlete_medals}
+    return render(request, 'athlete_list.html', context)
+
+def AthleteDetailView(request, bib_number):
+    athlete = get_object_or_404(Athlete, bib_number=bib_number)
+    
+    athlete_medal = {'athlete': athlete.athlete_name, 
+                    'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
+                    'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
+                    'bronze_medals': Result.objects.filter(athlete=athlete, medal='Bronze').count(),
+                    'total_medals': Result.objects.filter(athlete=athlete).count(),
+                    'athlete_info': athlete}
+    results = Result.objects.filter(athlete=athlete).order_by('event')
+    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal}
+    return render(request, 'athlete_detail.html', context)
