@@ -55,7 +55,7 @@ def AthleteListView(request):
 
 def AthleteDetailView(request, bib_number):
     athlete = get_object_or_404(Athlete, bib_number=bib_number)
-    
+    athlete_image = f'media/{athlete.image_profile}'
     athlete_medal = {'athlete': athlete.athlete_name, 
                     'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
                     'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
@@ -63,7 +63,7 @@ def AthleteDetailView(request, bib_number):
                     'total_medals': Result.objects.filter(athlete=athlete).count(),
                     'athlete_info': athlete}
     results = Result.objects.filter(athlete=athlete).order_by('event')
-    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal}
+    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal, 'athlete_image': athlete_image}
     return render(request, 'athlete_detail.html', context)
 
 def medalView(request):
@@ -73,11 +73,14 @@ def medalView(request):
         athletes = Athlete.objects.filter(country=country)
         country_medal = {
             'country': country.country_name,
+            'country_flag': f'media/{country.country_flag_image}',
             'gold_medals': Result.objects.filter(athlete__in=athletes, medal='Gold').count(),
             'silver_medals': Result.objects.filter(athlete__in=athletes, medal='Silver').count(),
             'bronze_medals': Result.objects.filter(athlete__in=athletes, medal='Bronze').count(),
             'total_medals': Result.objects.filter(athlete__in=athletes).count(),
+            'athletes': athletes
         }
         country_medals.append(country_medal)
+    print(country.country_flag_image)
     context = {'country_medals': country_medals}
     return render(request, 'medal.html', context)

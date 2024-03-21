@@ -16,13 +16,15 @@
         <th>Date of Birth</th>
     </tr>
     <tr>
+        {{ athlete_medal.athlete_info.image_profile }}
+        {{ athlete_image }}
         <td>{{ athlete.country }}</td>
         <td>{{ athlete_medal.athlete_info.athlete_name }}</td>
         <td>{{ athlete_medal.athlete_info.classification }}</td>
         <td>{{ athlete_medal.gold_medals }}</td>
         <td>{{ athlete_medal.silver_medals }}</td>
         <td>{{ athlete_medal.bronze_medals }}</td>
-        <td><img src="{{ athlete_medal.athlete_info.image.url }}" alt="athlete image" style="width:100px;height:100px;"></td>
+        <td><img src="{% static athlete_image %}" alt="athlete image" style="width:100px;height:100px;"></td>
         <td>{{ athlete_medal.athlete_info.gender }}</td>
         <td>{{ athlete_medal.athlete_info.bib_number }}</td>
         <td>{{ athlete_medal.athlete_info.birth_date }}</td>
