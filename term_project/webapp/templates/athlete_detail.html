@@ -1,33 +1,45 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-<h2>Athlete Details</h2>
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/athlete_detail.css' %}">
+    <title>Athelete Details</title>
+</head>
+
+<h2>{{ athlete_medal.athlete_info.athlete_name }}'s details</h2>
 <table>
+    <!-- <tr>
+        <th>Athlete Name</th>
+        <th>Information</th>
+    </tr> -->
     <tr>
-        <th>Country</th>
-        <th>Name</th>
-        <th>Classification</th>
-        <th>Gold</th>
-        <th>Silver</th>
-        <th>Bronze</th>
-        <th>Image</th>
-        <th>Gender</th>
-        <th>BIB Number</th>
-        <th>Date of Birth</th>
+        <td rowspan="9">
+            <img src="{% static athlete_image %}" alt="athlete image" style="width:100%; height:auto;">
+        </td>
+        <td><strong>Name:</strong> {{ athlete_medal.athlete_info.athlete_name }}</td>
     </tr>
     <tr>
-        {{ athlete_medal.athlete_info.image_profile }}
-        {{ athlete_image }}
-        <td>{{ athlete.country }}</td>
-        <td>{{ athlete_medal.athlete_info.athlete_name }}</td>
-        <td>{{ athlete_medal.athlete_info.classification }}</td>
-        <td>{{ athlete_medal.gold_medals }}</td>
-        <td>{{ athlete_medal.silver_medals }}</td>
-        <td>{{ athlete_medal.bronze_medals }}</td>
-        <td><img src="{% static athlete_image %}" alt="athlete image" style="width:100px;height:100px;"></td>
-        <td>{{ athlete_medal.athlete_info.gender }}</td>
-        <td>{{ athlete_medal.athlete_info.bib_number }}</td>
-        <td>{{ athlete_medal.athlete_info.birth_date }}</td>
+        <td><strong>Gender:</strong> {{ athlete_medal.athlete_info.gender }}</td>
+    </tr>
+    <tr>
+        <td><strong>Birthdate:</strong> {{ athlete_medal.athlete_info.birth_date }}</td>
+    </tr>
+    <tr>
+        <td><strong>Country:</strong> {{ athlete.country }}</td>
+    </tr>
+    <tr>
+        <td><strong>Country Name:</strong> {{ athlete.country_name }}</td>
+    </tr>
+    <tr>
+        <td><strong>Classification:</strong> {{ athlete_medal.athlete_info.classification }}</td>
+    </tr>
+    <tr>
+        <td><strong>Medals:</strong> Gold: {{ athlete_medal.gold_medals }}, Silver: {{ athlete_medal.silver_medals }},
+            Bronze: {{ athlete_medal.bronze_medals }}</td>
+    </tr>
+    <tr>
+        <td><strong>BIB Number:</strong> {{ athlete_medal.athlete_info.bib_number }}</td>
     </tr>
 </table>
 {% endblock %}

@@ -1,5 +1,72 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <h1>This is home page</h1>
+<!-- <h1>This is home page</h1> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paris 2024 Paralympic Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+            padding: 0;
+            background-color: #232323;
+            color: white;
+        }
+
+        .header {
+            position: relative;
+            height: 400px;
+            /* Adjust the height according to your image */
+            background-image: url('https://medias.paris2024.org/uploads/2023/11/OLY-GRAND-PALAIS-16_9-6-1.png?x-oss-process=image/resize,w_1057,h_979,m_lfit/format,webp');
+            /* Replace 'paralympic_image.jpg' with your image path */
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .description {
+            padding: 8vh;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>THE PARALYMPIC GAMES OF 2024</h1>
+    </div>
+
+    <div class="description">
+        <h2>About the Paralympic Games</h2>
+        <p>
+            The Paralympic Games are a multi-sport event for athletes with disabilities, including physical and
+            intellectual disabilities.
+            These Games showcase the incredible abilities of athletes from all over the world, inspiring millions and
+            promoting inclusivity
+            and accessibility in sports.
+            The Paris 2024 Paralympic Games promise to be a celebration of determination, skill, and sportsmanship.
+        </p>
+    </div>
+
+</body>
+
+</html>
+
 {% endblock %}

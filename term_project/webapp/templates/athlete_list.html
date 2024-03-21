@@ -1,31 +1,41 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <h1>Athlete List</h1>
-    <table>
-        <tr>
-            <th>Country</th>
-            <th>Name</th>
-            <th>Classification</th>
-            <th>Gold</th>
-            <th>Silver</th>
-            <th>Bronze</th>
-        </tr>
-        {% for athlete_medal in athlete_medals %}
-        
-        <tr>
-            <td>{{ athlete_medal.athlete_info.country }}</td>
-            <td>
-                <a href="{% url 'athlete-detail' athlete_medal.athlete_info.bib_number %}">
-                    {{ athlete_medal.athlete_info.athlete_name }}
-                </a>
-            </td>
-            <td>{{ athlete_medal.athlete_info.classification }}</td>
-            <td>{{ athlete_medal.gold_medals }}</td>
-            <td>{{ athlete_medal.silver_medals }}</td>
-            <td>{{ athlete_medal.bronze_medals }}</td>
-            </tr>
-        
-        {% endfor %}
-    </table>
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/athlete_list.css' %}">
+    <title>Schedule</title>
+</head>
+
+<!-- <h1>Athlete List</h1> -->
+<table>
+    <th>Country</th>
+    <th>Name</th>
+    <th>Classification</th>
+    <th>Gold</th>
+    <th>Silver</th>
+    <th>Bronze</th>
+    {% for athlete_medal in athlete_medals %}
+    <tr class="clickable" data-url="{% url 'athlete-detail' athlete_medal.athlete_info.bib_number %}">
+        <td>{{ athlete_medal.athlete_info.country }}</td>
+        <td>{{ athlete_medal.athlete_info.athlete_name }}</td>
+        <td>{{ athlete_medal.athlete_info.classification }}</td>
+        <td>{{ athlete_medal.gold_medals }}</td>
+        <td>{{ athlete_medal.silver_medals }}</td>
+        <td>{{ athlete_medal.bronze_medals }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var clickableElements = document.querySelectorAll('.clickable');
+        clickableElements.forEach(function (element) {
+            element.addEventListener('click', function () {
+                window.location = this.getAttribute('data-url');
+            });
+        });
+    });
+</script>
+
 {% endblock %}
