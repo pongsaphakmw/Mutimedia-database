@@ -35,3 +35,8 @@ def import_csv(request):
         # ... handle file upload, call import_athletes_from_csv ...
         return redirect('admin:app_label_athlete_changelist')  # Redirect back to Athlete list
     return render(request, 'admin/import_csv.html')  # Render a simple form template
+
+def AthleteListView(request):
+    athletes = Athlete.objects.all().order_by('classification')
+    context = {'athletes': athletes}
+    return render(request, 'athlete_list.html', context)
