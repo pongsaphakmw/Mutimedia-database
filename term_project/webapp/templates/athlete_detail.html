@@ -14,8 +14,9 @@
         <th>Information</th>
     </tr> -->
     <tr>
-        <td rowspan="9"><img src="{{ athlete.image_profile.url }}" alt="{{ athlete.athlete_name }}"
-                style="width:100px;height:100px;"></td>
+        <td rowspan="9">
+            <img src="{% static athlete_image %}" alt="athlete image" style="width:100%; height:auto;">
+        </td>
         <td><strong>Name:</strong> {{ athlete_medal.athlete_info.athlete_name }}</td>
     </tr>
     <tr>
