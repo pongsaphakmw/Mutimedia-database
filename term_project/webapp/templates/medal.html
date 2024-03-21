@@ -18,7 +18,9 @@
         <td>{{ medal.silver_medals }}</td>
         <td>{{ medal.bronze_medals }}</td>
         <td>{{ medal.total_medals }}</td>
-        <td>{{ medal.athletes}}</td>
+        {% for athlete in medal.athletes %}
+        {{ athlete.athlete_name }}
+        {% endfor %}
     </tr>
     {% endfor %}
 </table>
