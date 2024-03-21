@@ -55,7 +55,7 @@ def AthleteListView(request):
 
 def AthleteDetailView(request, bib_number):
     athlete = get_object_or_404(Athlete, bib_number=bib_number)
-    
+    athlete_image = f'media/{athlete.image_profile}'
     athlete_medal = {'athlete': athlete.athlete_name, 
                     'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
                     'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
@@ -63,7 +63,7 @@ def AthleteDetailView(request, bib_number):
                     'total_medals': Result.objects.filter(athlete=athlete).count(),
                     'athlete_info': athlete}
     results = Result.objects.filter(athlete=athlete).order_by('event')
-    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal}
+    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal, 'athlete_image': athlete_image}
     return render(request, 'athlete_detail.html', context)
 
 def medalView(request):
