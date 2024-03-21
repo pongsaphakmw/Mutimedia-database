@@ -78,7 +78,8 @@ class Athlete(models.Model):
                 birth_date=row['DOB'] if row['DOB'] else None,
                 gender=row['Gender'][0],
                 classification= _classification, # Not sure
-                country=Country.objects.get(country_code=row['Country'])
+                country=Country.objects.get(country_code=row['Country']),
+                image_profile=row['Image'] if row['Image'] else None
             )
             if not created:  # Handle updates, if desired
                 print(f"Athlete {athlete.athlete_name} might need an update")
