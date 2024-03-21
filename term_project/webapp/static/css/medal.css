@@ -8,7 +8,7 @@ table.basic-table {
   
   table.basic-table th {
     background-color: rgb(59, 59, 59);
-    text-align:center;
+    text-align:c;
     color: #fff;
     vertical-align: top;
     font-weight: 500;
@@ -25,6 +25,7 @@ tr:hover {
   table.basic-table td {
     padding: 15px;
     text-align: left;
+    
     border-bottom: 1px solid #ddd
   }
   
@@ -33,7 +34,6 @@ tr:hover {
     color: rgb(0, 0, 0);
     
   }
-  
   table.basic-table {
     margin-bottom: 0;
   }
