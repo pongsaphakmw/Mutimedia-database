@@ -40,5 +40,46 @@ def import_csv(request):
 
 def AthleteListView(request):
     athletes = Athlete.objects.all().order_by('classification')
-    context = {'athletes': athletes}
+    athlete_medals = []
+    for athlete in athletes:
+        athlete_medal = {'athlete': athlete.athlete_name, 
+                        'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
+                        'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
+                        'bronze_medals': Result.objects.filter(athlete=athlete, medal='Bronze').count(),
+                        'total_medals': Result.objects.filter(athlete=athlete).count(),
+                        'athlete_info': athlete}
+        athlete_medals.append(athlete_medal)
+        # print(f'{athlete} = {athlete_medal["athlete"]}')
+    # for i in athlete_medals:
+    #     print(i['athlete'], i['gold_medals'], i['silver_medals'], i['bronze_medals'])
+    context = {'athletes': athletes, 'athlete_medals': athlete_medals}
     return render(request, 'athlete_list.html', context)
+
+def AthleteDetailView(request, bib_number):
+    athlete = get_object_or_404(Athlete, bib_number=bib_number)
+    
+    athlete_medal = {'athlete': athlete.athlete_name, 
+                    'gold_medals': Result.objects.filter(athlete=athlete, medal='Gold').count(),
+                    'silver_medals': Result.objects.filter(athlete=athlete, medal='Silver').count(), 
+                    'bronze_medals': Result.objects.filter(athlete=athlete, medal='Bronze').count(),
+                    'total_medals': Result.objects.filter(athlete=athlete).count(),
+                    'athlete_info': athlete}
+    results = Result.objects.filter(athlete=athlete).order_by('event')
+    context = {'athlete': athlete, 'results': results, 'athlete_medal': athlete_medal}
+    return render(request, 'athlete_detail.html', context)
+
+def medalView(request):
+    countries = Country.objects.all()
+    country_medals = []
+    for country in countries:
+        athletes = Athlete.objects.filter(country=country)
+        country_medal = {
+            'country': country.country_name,
+            'gold_medals': Result.objects.filter(athlete__in=athletes, medal='Gold').count(),
+            'silver_medals': Result.objects.filter(athlete__in=athletes, medal='Silver').count(),
+            'bronze_medals': Result.objects.filter(athlete__in=athletes, medal='Bronze').count(),
+            'total_medals': Result.objects.filter(athlete__in=athletes).count(),
+        }
+        country_medals.append(country_medal)
+    context = {'country_medals': country_medals}
+    return render(request, 'medal.html', context)

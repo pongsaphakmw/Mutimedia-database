@@ -4,15 +4,28 @@
     <h1>Athlete List</h1>
     <table>
         <tr>
-            <th>Name</th>
             <th>Country</th>
-
+            <th>Name</th>
+            <th>Classification</th>
+            <th>Gold</th>
+            <th>Silver</th>
+            <th>Bronze</th>
         </tr>
-        {% for athlete in athletes %}
+        {% for athlete_medal in athlete_medals %}
+        
         <tr>
-            <td>{{ athlete.athlete_name }}</td>
-            <td>{{ athlete.country }}</td>
-        </tr>
+            <td>{{ athlete_medal.athlete_info.country }}</td>
+            <td>
+                <a href="{% url 'athlete-detail' athlete_medal.athlete_info.bib_number %}">
+                    {{ athlete_medal.athlete_info.athlete_name }}
+                </a>
+            </td>
+            <td>{{ athlete_medal.athlete_info.classification }}</td>
+            <td>{{ athlete_medal.gold_medals }}</td>
+            <td>{{ athlete_medal.silver_medals }}</td>
+            <td>{{ athlete_medal.bronze_medals }}</td>
+            </tr>
+        
         {% endfor %}
     </table>
 {% endblock %}

@@ -9,5 +9,6 @@ urlpatterns = [
     path('results/', results_view, name='results'),
     path('import_csv/', import_csv, name='import-csv'),
     path('athletes/', AthleteListView, name='athlete-list'),
-    path('medals/', medals_view, name='medals'),
+    path('athlete/<int:bib_number>/', AthleteDetailView, name='athlete-detail'),
+    path('medals/', medalView, name='medals'),
 ]

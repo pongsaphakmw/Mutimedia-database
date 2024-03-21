@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<h1>Medal Table</h1>
+<table>
+    <tr>
+        <th>Country</th>
+        <th>Gold</th>
+        <th>Silver</th>
+        <th>Bronze</th>
+    </tr>
+    {% for medal in country_medals %}
+    <tr>
+        <td>{{ medal.country }}</td>
+        <td>{{ medal.gold_medals }}</td>
+        <td>{{ medal.silver_medals }}</td>
+        <td>{{ medal.bronze_medals }}</td>
+        <td>{{ medal.total_medals }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
