@@ -4,6 +4,7 @@
 <h1>Medal Table</h1>
 <table>
     <tr>
+        <th>Flag</th>
         <th>Country</th>
         <th>Gold</th>
         <th>Silver</th>
@@ -11,11 +12,13 @@
     </tr>
     {% for medal in country_medals %}
     <tr>
+        <td><img src="{% static medal.country_flag %}" alt="flag" style="width:100px;height:100px;"></td>
         <td>{{ medal.country }}</td>
         <td>{{ medal.gold_medals }}</td>
         <td>{{ medal.silver_medals }}</td>
         <td>{{ medal.bronze_medals }}</td>
         <td>{{ medal.total_medals }}</td>
+        <td>{{ medal.athletes}}</td>
     </tr>
     {% endfor %}
 </table>
